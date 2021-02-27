@@ -28,7 +28,7 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with autopep8 and flake8
       run: |
-        autopep8 --in-place --aggressive --aggressive simulation/*.py
+        autopep8 --in-place --aggressive --aggressive simulation/*.py test/*.py
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
