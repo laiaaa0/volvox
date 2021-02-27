@@ -1,5 +1,6 @@
 from agent import Agent
 from geometry import Rectangle
+import math
 import random
 import matplotlib.pyplot as plt
 
