@@ -2,6 +2,7 @@ import unittest
 import simulation.geometry as geo
 import random
 import math
+import time
 
 class TestPoint(unittest.TestCase):
 
@@ -24,6 +25,17 @@ class TestPoint(unittest.TestCase):
             self.assertAlmostEqual(y + speed*math.sin(theta), point.y())
 
 
+class TestRectangle(unittest.TestCase):
+    def test_contains(self):
+        rectangle = geo.Rectangle(0,0,10,10)
+        values = [(random.randint(0,10), random.randint(0,10)) for _ in range(10)]
+        for (x,y) in values:
+            self.assertTrue(rectangle.contains(geo.Point(x,y)))
+            self.assertFalse(rectangle.contains(geo.Point(x+11,y)))
+            self.assertFalse(rectangle.contains(geo.Point(x,y-11)))
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_random_point(self):
+        rectangle = geo.Rectangle(0,0,10,10)
+        for _ in range(1000):
+            point = rectangle.random_point(42)
+            self.assertTrue(rectangle.contains(point))
