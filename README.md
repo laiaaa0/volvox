@@ -8,6 +8,7 @@ Clone the repository and build
 ```
 git clone https://github.com/laiaaa0/volvox.git
 cd volvox
+pip install virtualenv
 python -m virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
