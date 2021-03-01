@@ -1,2 +1,19 @@
 # volvox
-SImulate volvox movement
+Simulates volvox movement
+
+### Setup
+
+Clone the repository and build
+
+```
+git clone https://github.com/laiaaa0/volvox.git
+cd volvox
+python -m virtualenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Running : 
+```
+python simulation/simulation.py
+```
