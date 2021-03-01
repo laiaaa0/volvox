@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from arena import Arena
+from simulation.arena import Arena
 a = Arena()
 num_iterations = 1000
 for i in range (num_iterations):
