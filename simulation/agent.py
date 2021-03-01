@@ -1,4 +1,4 @@
-from geometry import Point, Rectangle
+from simulation.geometry import Point, Rectangle
 import math
 
 class Agent():

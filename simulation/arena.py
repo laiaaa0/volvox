@@ -1,5 +1,5 @@
-from agent import Agent
-from geometry import Rectangle
+from simulation.agent import Agent
+from simulation.geometry import Rectangle
 import math
 import random
 import matplotlib.pyplot as plt
