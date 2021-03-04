@@ -16,5 +16,5 @@ pip install -r requirements.txt
 
 Running : 
 ```
-python -m  simulation.run_simulation.py
+python -m  simulation.run_simulation
 ```
