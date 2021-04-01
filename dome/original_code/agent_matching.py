@@ -32,5 +32,6 @@ def agentMatching(past_contours, img_contours):
             matched_agents= np.append(matched_agents, contour_match, axis = 0)
         else:
             matched_agents[matched_agent_id]=contour_match
+    
     #carry over propogation number
     return matched_agents
