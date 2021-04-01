@@ -1,7 +1,7 @@
 import unittest
 import csv
 import dome.track_volvox as tracker
-import dome.dome_files.control_illum_main as ground_truth_script
+import dome.original_code.agent_matching as agent_matching_original
 from dome.detection import Detection
 
 class TestMatching(unittest.TestCase):
@@ -33,7 +33,7 @@ class TestMatching(unittest.TestCase):
                     detected_list[time_point]= [detection]
         matched_agents = []
         for i in range(1,50):
-            matched_agents.append(ground_truth_script.agentMatching(detected_list[i],detected_list[i+1]))
+            matched_agents.append(agent_matching_original.agentMatching(detected_list[i],detected_list[i+1]))
         with open('test/ground_truth.csv', mode='w') as csvfile:
             writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, dialect="excel")
             for i, row in enumerate(matched_agents):
