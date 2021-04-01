@@ -19,7 +19,7 @@ def find_agents(img):
 
 def match_detections(past_detections, current_detections):
     #to match agents in the current frame to the correct ID based on position
-    matched_detections = copy.copy(past_detections)
+    matched_detections = copy.deepcopy(past_detections)
     #set propagating agents to 1
     #caculate length of deactivity, becomes increasingly negative the more frames are dropped
     #note that if the countour is matched in the subsequent section, is will reset to zero

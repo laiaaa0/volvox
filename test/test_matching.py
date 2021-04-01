@@ -1,4 +1,5 @@
 import unittest
+import filecmp
 import csv
 import dome.track_volvox as tracker
 import dome.original_code.agent_matching as agent_matching_original
@@ -80,3 +81,5 @@ class TestMatching(unittest.TestCase):
                     l = tracked.to_list()
                     l.append(i)
                     writer.writerow(l)
+
+        self.assertTrue(filecmp.cmp('test/outputs.csv', 'test/ground_truth.csv', shallow=False))
