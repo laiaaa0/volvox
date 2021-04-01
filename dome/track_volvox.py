@@ -48,5 +48,6 @@ def match_detections(past_detections, current_detections):
             matched_detections.append(current_detection)
         else:
             matched_detections[matched_detection_id]=current_detection # update the detection
+
     #carry over propogation number
     return matched_detections

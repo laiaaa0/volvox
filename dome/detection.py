@@ -33,3 +33,9 @@ class Detection:
 
     def distance(self, other_detection):
         return self.position().distance(other_detection.position())
+
+    def __eq__(self, other):
+        return self.__pos==other.position() and self.__r == other.radius() and self.__detected_in_current_frame==other.__detected_in_current_frame and self.__detections_last_frames==other.__detections_last_frames
+
+    def a(self):
+        return self.__detected_in_current_frame
