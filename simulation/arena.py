@@ -1,5 +1,6 @@
 from simulation.agent import Agent
 from simulation.geometry import Rectangle, Point
+from simulation.light_updater import new_pattern
 import math
 import random
 import matplotlib.pyplot as plt
@@ -28,6 +29,7 @@ class Arena():
         self.__ax.axis([-self.__width / 2, self.__width /
                         2, -self.__height / 2, self.__height / 2])
 
+        self.__dynamic_updates = (pattern==Pattern.DYNAMIC)
         self.__pattern = np.zeros(
             (self.__width, self.__height), dtype=np.uint8)
         if pattern == Pattern.SQUARE:
@@ -47,8 +49,7 @@ class Arena():
             # image, and with radius 100
             circle_mask = (x - center_x)**2 + (y - center_y)**2 <= radius**2
             self.__pattern[circle_mask] = 1
-        else:
-            print("Unimplemented")
+
 
     def initialise_agents(self, num_agents: int, seed=42):
         random.seed(seed)
@@ -62,8 +63,8 @@ class Arena():
                         2 * math.pi),
                     pos=self.__rectangle.random_point(seed),
                     frames_on=random.randint(
-                        20,
-                        50),
+                        10,
+                        20),
                     frames_off=random.randint(
                         3,
                         5)))
@@ -76,19 +77,28 @@ class Arena():
         img = Image.fromarray(coloured_pattern, mode="RGBA")
         return img
 
-    def is_position_illuminated(self, position: Point):
+    def agent_pos_to_light_index(self, position:Point):
         # position range from -width/2 to +width/2, -height/2 to +height/2
         # numpy range from 0 to width and from 0 to height
         transformed_position = position + \
             Point(self.__width / 2, self.__height / 2)
-        index_x = min(int(transformed_position.x()), self.__width - 1)
-        index_y = min(int(transformed_position.y()), self.__height - 1)
+        x = min(max(0,int(transformed_position.x())), self.__width - 1)
+        y = self.__height - max(1,min(int(transformed_position.y()), self.__height))
 
-        return self.__pattern[index_x, index_y]
+        return (y,x) # change (x,y) to (row,column)
+
+    def is_position_illuminated(self, position: Point):
+        (row,column) = self.agent_pos_to_light_index(position)
+        return self.__pattern[row,column]
 
     def update(self):
+        if self.__dynamic_updates:
+            positions =[self.agent_pos_to_light_index(a.position()) for a in self.__agent_list]
+
+            self.__pattern = new_pattern(self.__pattern.shape, positions)
         for agent in self.__agent_list:
             agent.update(self.is_position_illuminated(agent.position()))
+        
 
     def plot(self):
         self.__ax.cla()

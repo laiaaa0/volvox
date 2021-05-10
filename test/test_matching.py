@@ -14,9 +14,9 @@ def generate_ground_truth():
         for row in reader:
             time_point = int(row[-1])
             detection = [
-                int(row[0]), int(row[1]), # X Y
-                int(row[2]), int(row[2]), # w h
-                int(row[3]), int(row[4])] # deactivity
+                int(row[0]), int(row[1]),  # X Y
+                int(row[2]), int(row[2]),  # w h
+                int(row[3]), int(row[4])]  # deactivity
             if time_point in detected_list:
                 detected_list[time_point].append(detection)
             else:
@@ -43,7 +43,7 @@ def generate_ground_truth():
 class TestMatching(unittest.TestCase):
 
     @classmethod
-    def setUpClass(cls):    
+    def setUpClass(cls):
         with open('test/data/detections.csv', newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             cls._detected_list = {}
@@ -58,17 +58,16 @@ class TestMatching(unittest.TestCase):
                     cls._detected_list[time_point] = [detection]
         generate_ground_truth()
 
-
     def test_matching(self):
         outputs = []
         for i in range(1, 50):
             self.assertTrue(
-                i in self._detected_list and 
+                i in self._detected_list and
                 i + 1 in self._detected_list)
-            next_detection =tracker.match_detections(
-                self._detected_list[i], self._detected_list[i + 1]) 
+            next_detection = tracker.match_detections(
+                self._detected_list[i], self._detected_list[i + 1])
             outputs.append(next_detection)
-        
+
         with open('test/outputs.csv', mode='w') as csvfile:
             writer = csv.writer(
                 csvfile,
@@ -82,4 +81,8 @@ class TestMatching(unittest.TestCase):
                     l.append(i)
                     writer.writerow(l)
 
-        self.assertTrue(filecmp.cmp('test/outputs.csv', 'test/ground_truth.csv', shallow=False))
+        self.assertTrue(
+            filecmp.cmp(
+                'test/outputs.csv',
+                'test/ground_truth.csv',
+                shallow=False))
